@@ -28,6 +28,8 @@
     "schema": "src/app/adapters/orm/prisma/schema.prisma"
   },
   "dependencies": {
+    "@graphql-hive/gateway": "^1.0.5",
+    "@graphql-mesh/compose-cli": "^1.0.2",
     "@prisma/client": "5.8.1",
     "express": "^4.19.2",
     "morgan": "^1.10.0",
