@@ -9,7 +9,7 @@ schema
   
   @link(
   url: "https://the-guild.dev/graphql/mesh/spec/v1.0"
-  import: ["@transport", "@merge", "@extraSchemaDefinitionDirective"]
+  import: ["@httpOperation", "@transport", "@extraSchemaDefinitionDirective"]
 )
 {
   query: Query
@@ -78,106 +78,58 @@ schema
 
 
 enum join__Graph {
-  COUNTRIES @join__graph(name: "Countries", url: "https://countries.trevorblades.com") 
+  TODO_API @join__graph(name: "todoApi", url: "http://localhost:3000") 
 }
 
-directive @transport(
-  kind: String!
-  subgraph: String!
-  location: String!
-  headers: [[String]]
-  options: TransportOptions
-) repeatable on SCHEMA
-
-directive @merge(
+directive @httpOperation(
   subgraph: String
-  argsExpr: String
-  keyArg: String
-  keyField: String
-  key: [String!]
-  additionalArgs: String
+  path: String
+  operationSpecificHeaders: [[String]]
+  httpMethod: HTTPMethod
+  isBinary: Boolean
+  requestBaseBody: ObjMap
+  queryParamArgMap: ObjMap
+  queryStringOptionsByParam: ObjMap
+  jsonApiFields: Boolean
+  queryStringOptions: ObjMap
 ) repeatable on FIELD_DEFINITION
+
+directive @transport(
+  subgraph: String
+  kind: String
+  location: String
+  headers: [[String]]
+  queryStringOptions: ObjMap
+  queryParams: [[String]]
+) repeatable on SCHEMA
 
 directive @extraSchemaDefinitionDirective(directives: _DirectiveExtensions)  repeatable on OBJECT
 
-scalar TransportOptions @join__type(graph: COUNTRIES) 
+scalar ObjMap @join__type(graph: TODO_API) 
 
-scalar _DirectiveExtensions @join__type(graph: COUNTRIES) 
-
-type Continent @join__type(graph: COUNTRIES, key: "code")  {
-  code: ID!
-  countries: [Country!]!
-  name: String!
-}
-
-type Country @join__type(graph: COUNTRIES, key: "code")  {
-  code: ID!
-  awsRegion: String!
-  capital: String
-  continent: Continent!
-  currencies: [String!]!
-  currency: String
-  emoji: String!
-  emojiU: String!
-  languages: [Language!]!
-  name(lang: String) : String!
-  native: String!
-  phone: String!
-  phones: [String!]!
-  states: [State!]!
-  subdivisions: [Subdivision!]!
-}
-
-type Language @join__type(graph: COUNTRIES, key: "code")  {
-  code: ID!
-  name: String!
-  native: String!
-  rtl: Boolean!
-}
+scalar _DirectiveExtensions @join__type(graph: TODO_API) 
 
 type Query @extraSchemaDefinitionDirective(
-  directives: {transport: [{kind: "http", subgraph: "Countries", location: "https://countries.trevorblades.com", options: {}}]}
-) @join__type(graph: COUNTRIES)  {
-  continent(code: ID!) : Continent @merge(subgraph: "Countries", keyField: "code", keyArg: "code") 
-  continents(filter: ContinentFilterInput = {}) : [Continent!]!
-  countries(filter: CountryFilterInput = {}) : [Country!]!
-  country(code: ID!) : Country @merge(subgraph: "Countries", keyField: "code", keyArg: "code") 
-  language(code: ID!) : Language @merge(subgraph: "Countries", keyField: "code", keyArg: "code") 
-  languages(filter: LanguageFilterInput = {}) : [Language!]!
+  directives: {transport: [{subgraph: "todoApi", kind: "rest", location: "http://localhost:3000", headers: [["Content-Type", "application/json"]]}]}
+) @join__type(graph: TODO_API)  {
+  todos: [query_todos_items] @httpOperation(subgraph: "todoApi", path: "/todos", httpMethod: GET) 
 }
 
-type State @join__type(graph: COUNTRIES)  {
-  code: String
-  country: Country!
-  name: String!
+type query_todos_items @join__type(graph: TODO_API)  {
+  id: Int
+  name: String
+  content: String
 }
 
-type Subdivision @join__type(graph: COUNTRIES)  {
-  code: ID!
-  emoji: String
-  name: String!
-}
-
-input ContinentFilterInput @join__type(graph: COUNTRIES)  {
-  code: StringQueryOperatorInput
-}
-
-input CountryFilterInput @join__type(graph: COUNTRIES)  {
-  code: StringQueryOperatorInput
-  continent: StringQueryOperatorInput
-  currency: StringQueryOperatorInput
-  name: StringQueryOperatorInput
-}
-
-input LanguageFilterInput @join__type(graph: COUNTRIES)  {
-  code: StringQueryOperatorInput
-}
-
-input StringQueryOperatorInput @join__type(graph: COUNTRIES)  {
-  eq: String
-  in: [String!]
-  ne: String
-  nin: [String!]
-  regex: String
+enum HTTPMethod @join__type(graph: TODO_API)  {
+  GET @join__enumValue(graph: TODO_API) 
+  HEAD @join__enumValue(graph: TODO_API) 
+  POST @join__enumValue(graph: TODO_API) 
+  PUT @join__enumValue(graph: TODO_API) 
+  DELETE @join__enumValue(graph: TODO_API) 
+  CONNECT @join__enumValue(graph: TODO_API) 
+  OPTIONS @join__enumValue(graph: TODO_API) 
+  TRACE @join__enumValue(graph: TODO_API) 
+  PATCH @join__enumValue(graph: TODO_API) 
 }
     
