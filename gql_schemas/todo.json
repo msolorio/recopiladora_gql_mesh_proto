@@ -1,0 +1,9 @@
+{
+  "id": 0,
+  "name": "TodoName",
+  "content": "TodoContent",
+  "author": {
+    "first": "FirstName",
+    "last": "LastName"
+  }
+}

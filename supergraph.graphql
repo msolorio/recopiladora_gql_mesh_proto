@@ -9,7 +9,7 @@ schema
   
   @link(
   url: "https://the-guild.dev/graphql/mesh/spec/v1.0"
-  import: ["@httpOperation", "@transport", "@extraSchemaDefinitionDirective"]
+  import: ["@example", "@httpOperation", "@transport", "@extraSchemaDefinitionDirective"]
 )
 {
   query: Query
@@ -81,6 +81,8 @@ enum join__Graph {
   TODO_API @join__graph(name: "todoApi", url: "http://localhost:3000") 
 }
 
+directive @example(subgraph: String, value: ObjMap)  repeatable on FIELD_DEFINITION | OBJECT | INPUT_OBJECT | ENUM | SCALAR
+
 directive @httpOperation(
   subgraph: String
   path: String
@@ -113,12 +115,34 @@ type Query @extraSchemaDefinitionDirective(
   directives: {transport: [{subgraph: "todoApi", kind: "rest", location: "http://localhost:3000", headers: [["Content-Type", "application/json"]]}]}
 ) @join__type(graph: TODO_API)  {
   todos: [query_todos_items] @httpOperation(subgraph: "todoApi", path: "/todos", httpMethod: GET) 
+  todo(id: String) : query_todo @httpOperation(subgraph: "todoApi", path: "/todos/{args.id}", httpMethod: GET) 
 }
 
 type query_todos_items @join__type(graph: TODO_API)  {
   id: Int
   name: String
   content: String
+  author: query_todos_items_author
+}
+
+type query_todos_items_author @join__type(graph: TODO_API)  {
+  first: String
+  last: String
+}
+
+type query_todo @example(
+  subgraph: "todoApi"
+  value: "{\"id\":0,\"name\":\"TodoName\",\"content\":\"TodoContent\",\"author\":{\"first\":\"FirstName\",\"last\":\"LastName\"}}"
+) @join__type(graph: TODO_API)  {
+  id: Int
+  name: String
+  content: String
+  author: query_todo_author
+}
+
+type query_todo_author @join__type(graph: TODO_API)  {
+  first: String
+  last: String
 }
 
 enum HTTPMethod @join__type(graph: TODO_API)  {

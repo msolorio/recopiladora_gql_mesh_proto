@@ -29,6 +29,13 @@ export const composeConfig = defineConfig({
             method: 'GET',
             responseSample: './gql_schemas/todos.json',
           },
+          {
+            type: OperationTypeNode.QUERY,
+            field: 'todo',
+            path: '/todos/{args.id}',
+            method: 'GET',
+            responseSample: './gql_schemas/todo.json',
+          }
         ],
       }),
     },
