@@ -1,6 +1,6 @@
 import { parse } from 'graphql'
 import { getExecutorForUnifiedGraph } from '@graphql-hive/gateway'
-import supergraph from './supergraph'
+import supergraph from '../../supergraph'
 
 const executor = getExecutorForUnifiedGraph({
   getUnifiedGraph: () => supergraph

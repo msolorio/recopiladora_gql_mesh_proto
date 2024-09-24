@@ -14,7 +14,6 @@
     "alwaysStrict": true,
     "sourceMap": true,
     "esModuleInterop": true,
-    "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
@@ -40,8 +39,5 @@
     "src/**/*.ts",
     "__tests__/**/*.mts",
     "__tests__/**/*.ts",
-    "mesh.config.ts",
-    "getDataHttp.ts",
-    "getDataLocal.ts",
-  ],
+  ]
 }
