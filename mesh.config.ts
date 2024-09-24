@@ -1,19 +1,9 @@
-// import { defineConfig, loadGraphQLHTTPSubgraph } from '@graphql-mesh/compose-cli'
 import { defineConfig, } from '@graphql-mesh/compose-cli'
 import { loadJSONSchemaSubgraph } from '@omnigraph/json-schema'
 import { OperationTypeNode } from 'graphql'
 
-// export const composeConfig = defineConfig({
-//   subgraphs: [
-//     {
-//       sourceHandler: loadGraphQLHTTPSubgraph('Countries', {
-//         endpoint: 'https://countries.trevorblades.com'
-//       })
-//     }
-//   ]
-// })
-
 export const composeConfig = defineConfig({
+  output: './supergraph.ts',
   subgraphs: [
     {
       sourceHandler: loadJSONSchemaSubgraph('todoApi', {

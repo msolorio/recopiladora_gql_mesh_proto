@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2022",
-    "module": "es2015",
+    "module": "es2022",
     "lib": [
       "ES2022"
     ],
@@ -41,6 +41,7 @@
     "__tests__/**/*.mts",
     "__tests__/**/*.ts",
     "mesh.config.ts",
-    "getData.ts",
+    "getDataHttp.ts",
+    "getDataLocal.ts",
   ],
 }
