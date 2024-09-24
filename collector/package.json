@@ -9,6 +9,7 @@
   "scripts": {
     "start": "node dist/src/app/entrypoints/index.js",
     "dev": "npx tsx --watch src/app/entrypoints/index.ts",
+    "execute-dev": "npx tsx src/app/getDataLocal.ts",
     "clean": "rimraf coverage dist tmp",
     "prebuild": "npm run lint",
     "build": "tsc -p tsconfig.json",
@@ -22,7 +23,8 @@
   },
   "imports": {
     "#app/*": "./dist/src/app/*",
-    "#__tests__/*": "./dist/__tests__/*"
+    "#__tests__/*": "./dist/__tests__/*",
+    "#": "./"
   },
   "prisma": {
     "schema": "src/app/adapters/orm/prisma/schema.prisma"

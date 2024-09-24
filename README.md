@@ -9,6 +9,10 @@ cd recopiladora_gql_mesh_proto
 make build
 make dev
 ```
+Navigate to collector dir
+```
+cd collector
+```
 
 Generate the supergraph after making updates to `mesh.config.ts`
 ```
@@ -17,7 +21,7 @@ npx mesh-compose
 
 ### Query supergraph locally
 ```
-npx tsx ./getDataLocal.ts
+npx tsx ./src/app/getDataLocal.ts
 ```
 
 ---

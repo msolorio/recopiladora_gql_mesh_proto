@@ -1,8 +1,8 @@
 import { parse } from 'graphql'
 import { getExecutorForUnifiedGraph } from '@graphql-hive/gateway'
-import supergraph from '../../supergraph'
+import supergraph from 'supergraph'
 
-const executor = getExecutorForUnifiedGraph({
+const fetcExecutor = getExecutorForUnifiedGraph({
   getUnifiedGraph: () => supergraph
 })
 
@@ -20,7 +20,7 @@ const exampleDocument = parse(`
   }
 `)
 
-const result = await executor({
+const result = await fetcExecutor({
   document: exampleDocument,
   variables: {},
   context: {

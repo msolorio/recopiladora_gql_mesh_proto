@@ -31,6 +31,9 @@
       ],
       "#__tests__": [
         "__tests__/*"
+      ],
+      "#": [
+        "./"
       ]
     }
   },
@@ -39,5 +42,7 @@
     "src/**/*.ts",
     "__tests__/**/*.mts",
     "__tests__/**/*.ts",
+    "mesh.config.ts",
+    "supergraph.ts",
   ]
 }
